@@ -3,12 +3,17 @@
   "version": "1.0.0",
   "description": "منظومة مركز تمكين التعليمية — نموذج تفاعلي (HTML + React عبر المتصفح)",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "serve . -l 8000",
-    "start": "serve . -l 8000"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "gh-pages": "^6.3.0",
-    "serve": "^14.2.1"
+    "vite": "^5.2.11"
   }
 }
