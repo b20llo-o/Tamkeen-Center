@@ -1,17 +1,26 @@
 /* =========================================================================
    إعداد اتصال Supabase — منظومة مركز تمكين
-   anon key مفتاح عام آمن للاستخدام في المتصفح (الحماية من RLS).
-   لا تضع هنا مفتاح service_role أبدًا.
-   يتطلب تحميل مكتبة supabase-js (UMD) قبل هذا الملف.
+   تم تحديثه ليتوافق مع نظام كبسولات الحزم (ES Modules) لـ Vite و Vercel.
    ========================================================================= */
-window.TAMKEEN_SUPABASE_URL = "https://lizeshrnwkxxkvclwitf.supabase.co";
-window.TAMKEEN_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxpemVzaHJud2t4eGt2Y2x3aXRmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMzA3NTYsImV4cCI6MjA5NTgwNjc1Nn0.AxcbazAZdiOOvXRApbQzk-MMMFOTwwUY4asEONhSxUg";
+import { createClient } from '@supabase/supabase-js';
 
-window.tamkeenSupabase = window.supabase.createClient(
-  window.TAMKEEN_SUPABASE_URL,
-  window.TAMKEEN_SUPABASE_ANON_KEY,
+// الإعدادات الأساسية لقاعدة البيانات
+export const TAMKEEN_SUPABASE_URL = "https://lizeshrnwkxxkvclwitf.supabase.co";
+export const TAMKEEN_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxpemVzaHJud2t4eGt2Y2x3aXRmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMzA3NTYsImV4cCI6MjA5NTgwNjc1Nn0.AxcbazAZdiOOvXRApbQzk-MMMFOTwwUY4asEONhSxUg";
+
+// إنشاء كائن الاتصال بـ Supabase بشكل قياسي ومباشر
+export const tamkeenSupabase = createClient(
+  TAMKEEN_SUPABASE_URL,
+  TAMKEEN_SUPABASE_ANON_KEY,
   { auth: { persistSession: true, autoRefreshToken: true, storageKey: "tamkeen_auth" } }
 );
 
-// تحويل مفتاح الدخول (مثل T100) إلى البريد الداخلي المستخدم في Supabase Auth
-window.tamkeenKeyToEmail = (key) => `${String(key || "").trim().toLowerCase()}@tamkeen.local`;
+// تحويل مفتاح الدخول إلى البريد الداخلي
+export const tamkeenKeyToEmail = (key) => `${String(key || "").trim().toLowerCase()}@tamkeen.local`;
+
+// 💡 الحفاظ على حقن الكائنات في الـ window لتجنب انهيار بقية ملفات المشروع (مثل data.js و core.jsx)
+window.TAMKEEN_SUPABASE_URL = TAMKEEN_SUPABASE_URL;
+window.TAMKEEN_SUPABASE_ANON_KEY = TAMKEEN_SUPABASE_ANON_KEY;
+window.supabase = { createClient }; // لمنع أي ملف آخر يبحث عن window.supabase من الانهيار
+window.tamkeenSupabase = tamkeenSupabase;
+window.tamkeenKeyToEmail = tamkeenKeyToEmail;
