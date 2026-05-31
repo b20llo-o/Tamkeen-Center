@@ -1,0 +1,13 @@
+{
+  "name": "tamkeen-center",
+  "version": "1.0.0",
+  "description": "منظومة مركز تمكين التعليمية — نموذج تفاعلي (HTML + React عبر المتصفح)",
+  "private": true,
+  "scripts": {
+    "dev": "serve . -l 8000",
+    "start": "serve . -l 8000"
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}
